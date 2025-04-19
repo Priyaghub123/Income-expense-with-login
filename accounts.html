@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accounts App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      background: #eaeaea;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>My Account</h2>
+    <div class="input-group">
+      <label for="income">Add Income (₹):</label>
+      <input type="number" id="income" placeholder="Enter income amount" />
+    </div>
+    <div class="input-group">
+      <label for="expense">Add Expense (₹):</label>
+      <input type="number" id="expense" placeholder="Enter expense amount" />
+    </div>
+    <button id="addButton">Add Income / Expense</button>
+    <h3>Your Balance: <span id="balance">₹0.00</span></h3>
+    <h3>Transaction History</h3>
+    <ul id="historyList"></ul>
+  </div>
+
+  <script>
+    const balanceElement = document.getElementById('balance');
+    const addButton = document.getElementById('addButton');
+    const incomeInput = document.getElementById('income');
+    const expenseInput = document.getElementById('expense');
+    const historyList = document.getElementById('historyList');
+
+    let balance = 0;
+
+    addButton.addEventListener('click', function () {
+      const income = parseFloat(incomeInput.value);
+      const expense = parseFloat(expenseInput.value);
+
+      if (income > 0) {
+        balance += income;
+        addTransactionToHistory('Income', income);
+      }
+
+      if (expense > 0) {
+        balance -= expense;
+        addTransactionToHistory('Expense', expense);
+      }
+
+      updateBalance();
+      clearInputs();
+    });
+
+    function updateBalance() {
+      balanceElement.textContent = `₹${balance.toFixed(2)}`;
+    }
+
+    function addTransactionToHistory(type, amount) {
+      const li = document.createElement('li');
+      li.textContent = `${type}: ₹${amount.toFixed(2)}`;
+      historyList.appendChild(li);
+    }
+
+    function clearInputs() {
+      incomeInput.value = '';
+      expenseInput.value = '';
+    }
+  </script>
+</body>
+</html>

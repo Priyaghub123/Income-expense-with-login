@@ -1,0 +1,80 @@
+<center>
+    
+    <div id="loginbox">
+
+        <input type="text" id="username" placeholder="Username" autocomplete="new-password"> <br>
+        <input type="password" id="password" placeholder="Password" autocomplete="new-password"> <br>
+
+    <button id="btnlogin">login</button>
+
+
+</div>
+
+
+</center>
+
+<style>
+#loginbox{
+    height: 210;
+    width: 400;
+    background-color: black;
+    margin-top: 200;
+
+}
+
+#username{
+    background-color: white;
+    margin-top: 30;
+    width: 350;
+    height: 35;
+    
+}
+
+#password{
+    background-color: white;
+    margin-top: 30;
+    width: 350;
+    height: 35;
+
+    
+}
+
+#btnlogin{
+    margin-top: 35;
+    width: 150;
+    background-color: silver;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: medium;
+    font-weight: bold;
+}
+
+</style>
+<script>
+    document.getElementById("btnlogin").addEventListener("click", () => {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+    
+      console.log("Username:", username);
+      console.log("Password:", password);
+    
+      // Example: fetch all users and compare
+      fetch('http://localhost:3000/users')
+        .then(response => response.json())
+        .then(data => {
+          // Now compare entered credentials with the ones in DB
+          const match = data.find(user => user.username === username && user.password === password);
+    
+          if (match) {
+            alert("Login successful!");
+            // Redirect or show another page if you want
+            window.location.href = "accounts.html"; // Replace with your actual file name if different
+
+          } else {
+            alert("Invalid username or password.");
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching users:', error);
+        });
+    });
+    </script>
